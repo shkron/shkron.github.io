@@ -1,1 +1,121 @@
-Hello World
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects • Alex</title>
+  <meta name="description" content="Minimal landing page linking to selected GitHub Pages projects and repositories." />
+  <style>
+    :root{
+      --bg:#ffffff;        /* page background */
+      --text:#0f172a;      /* primary text */
+      --muted:#6b7280;     /* secondary text */
+      --card:#f8fafc;      /* card background */
+      --border:#e5e7eb;    /* subtle borders */
+      --link:#111827;      /* link color */
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b0f17;
+        --text:#e5e7eb;
+        --muted:#9ca3af;
+        --card:#0f1521;
+        --border:#1f2937;
+        --link:#93c5fd;
+      }
+    }
+
+    html, body { height: 100%; margin: 0; }
+    body{
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .wrap{ max-width: 920px; margin: 6vh auto; padding: 0 20px; }
+
+    header{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 24px; }
+    h1{ font-size: clamp(24px, 3.2vw, 36px); margin: 0; }
+    .lead{ color: var(--muted); margin: 6px 0 0; }
+
+    .grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,.07); }
+    .card h2{ font-size: 18px; margin: 0 0 6px; }
+    .card h2 a{ color: inherit; text-decoration: none; }
+    .card p{ margin: 0 0 12px; color: var(--muted); }
+
+    .links{ display:flex; gap:12px; flex-wrap: wrap; }
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:12px;
+      text-decoration:none; border:1px solid var(--border);
+      color: var(--link);
+    }
+    .btn:hover{ border-color: var(--link); }
+
+    footer{ margin-top: 28px; color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div>
+        <h1>Projects</h1>
+        <p class="lead">Small, focused tools & dashboards. More soon.</p>
+      </div>
+    </header>
+
+    <section id="projects" class="grid" aria-live="polite"></section>
+
+    <footer>
+      <span>© <span id="year"></span> Alex</span>
+    </footer>
+  </main>
+
+  <script>
+    // 🔧 Add or edit entries here. Each item renders as a card below.
+    // { title, liveUrl, repoUrl, description }
+    const projects = [
+      {
+        title: "iOS VPN Autoconnect",
+        liveUrl: "https://shkron.github.io/iOS-VPN-Autoconnect/",
+        repoUrl: "https://github.com/shkron/iOS-VPN-Autoconnect",
+        description: "Auto‑connect VPN on iOS via Shortcuts/automation."
+      },
+      {
+        title: "BTC S2F Deflection Dashboard",
+        liveUrl: "https://shkron.github.io/btc_s2f_deflection_dashboard/",
+        repoUrl: "https://github.com/shkron/btc_s2f_deflection_dashboard",
+        description: "Dashboard tracking Bitcoin stock‑to‑flow deflection."
+      }
+    ];
+
+    const container = document.getElementById('projects');
+
+    for (const p of projects){
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = `
+        <h2><a href="${p.liveUrl}" target="_blank" rel="noopener">${p.title}</a></h2>
+        <p>${p.description}</p>
+        <div class="links">
+          <a class="btn" href="${p.liveUrl}" target="_blank" rel="noopener" aria-label="Open ${p.title} live demo">Live demo</a>
+          <a class="btn" href="${p.repoUrl}" target="_blank" rel="noopener" aria-label="Open ${p.title} repository">Repository</a>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
